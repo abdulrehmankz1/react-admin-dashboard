@@ -111,18 +111,19 @@ const AuthProvider = (type, params) => {
           console.log('Decoded token:', decodedToken);
 
           // Check if the decoded token has the 'role' property
-          if (!decodedToken.role) {
-            console.error('Role not found in the token:', decodedToken);
-            throw new Error('Role not found in the token');
-          }
+          // if (!decodedToken.role) {
+          //   console.error('Role not found in the token:', decodedToken);
+          //   throw new Error('Role not found in the token');
+          // }
 
-          // Store the token and role in local storage
+          // // Store the token and role in local storage
           localStorage.setItem('token', access_token);
-          localStorage.setItem('role', decodedToken.role);
+          // localStorage.setItem('role', decodedToken.role);
         } catch (error) {
           console.error('Failed to decode token:', error);
           throw new Error('Failed to decode token');
         }
+
       })
       .catch(error => {
         console.error('Login failed:', error);
@@ -133,7 +134,7 @@ const AuthProvider = (type, params) => {
   if (type === AUTH_LOGOUT) {
     // Clear token and role from local storage on logout
     localStorage.removeItem('token');
-    localStorage.removeItem('role');
+    // localStorage.removeItem('role');
     return Promise.resolve();
   }
 
@@ -147,14 +148,14 @@ const AuthProvider = (type, params) => {
     return localStorage.getItem('token') ? Promise.resolve() : Promise.reject('No token available');
   }
 
-  if (type === AUTH_GET_PERMISSIONS) {
-    // Retrieve and return the role from local storage
-    const role = localStorage.getItem('role');
-    return role ? Promise.resolve(role) : Promise.reject('Role not available');
-  }
+  // if (type === AUTH_GET_PERMISSIONS) {
+  //   // Retrieve and return the role from local storage
+  //   const role = localStorage.getItem('role');
+  //   return role ? Promise.resolve(role) : Promise.reject('Role not available');
+  // }
 
   // Reject unknown method with an error message
-  return Promise.reject('Unknown method');
+  // return Promise.reject('Unknown method');
 };
 
 export default AuthProvider;
